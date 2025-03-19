@@ -1,10 +1,10 @@
 package fifteen
 
 const (
-	left  = "up"
-	down  = "down"
-	up    = "up"
-	right = "right"
+	left  = "Left"
+	down  = "Down"
+	up    = "Up"
+	right = "Right"
 )
 
 type FifteenEdge struct {
