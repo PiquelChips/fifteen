@@ -16,11 +16,37 @@ func (vertex *FifteenVertex) GetNextVertex(edge FifteenVertex) FifteenVertex {
 	return make(FifteenVertex, 0)
 }
 
-func (vertex *FifteenVertex) GetAllEdges() []FifteenVertex {
-	return make([]FifteenVertex, 0)
+func (vertex *FifteenVertex) GetAllEdges() []FifteenEdge {
+    zeroX, zeroY := vertex.getZero()
+    edges := []FifteenEdge{}
+
+    if zeroX < 3 {
+        edge := FifteenEdge{number: (*vertex)[zeroY][zeroX+1], direction: left}
+        edges = append(edges, edge)
+    }
+    
+    // down
+    if zeroY > 0 {
+        edge := FifteenEdge{number: (*vertex)[zeroY-1][zeroX], direction: down}
+        edges = append(edges, edge)
+    }
+
+    // up
+    if zeroY < 3 {
+        edge := FifteenEdge{number: (*vertex)[zeroY+1][zeroX], direction: up}
+        edges = append(edges, edge)
+    }
+
+    if zeroX > 0 {
+        edge := FifteenEdge{number: (*vertex)[zeroY][zeroX-1], direction: right}
+        edges = append(edges, edge)
+    }
+
+	return edges
 }
 
-func (vertex *FifteenVertex) GetZero() (int, int) {
+// Return x and y coords of the zero
+func (vertex *FifteenVertex) getZero() (int, int) {
 	for y := range *vertex {
 		for x, number := range (*vertex)[y] {
 			if number == 0 {
@@ -52,5 +78,5 @@ func (edge *FifteenEdge) Print() {
         space = " "
     }
 
-    fmt.Printf("%d%s, %s\n", edge.number, space, edge.direction)
+    fmt.Printf("%d,%s %s\n", edge.number, space, edge.direction)
 }
