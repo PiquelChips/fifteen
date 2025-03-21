@@ -17,6 +17,7 @@ func main() {
 	edges := vertex.GetAllEdges()
 
 	for _, edge := range edges {
+        edge.Print()
         vertex.GetNextVertex(edge).Print()
 	}
 }
