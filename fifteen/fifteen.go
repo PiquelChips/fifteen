@@ -13,13 +13,24 @@ func (vertex FifteenVertex) GetPotential(*FifteenVertex) {
 }
 
 func (vertex FifteenVertex) GetNextVertex(edge FifteenEdge) FifteenVertex {
+	nextVertex := FifteenVertex{}
+    cop
+	numX, numY := vertex.getNum(edge.number)
 	switch edge.direction {
 	case left:
+		nextVertex[numY][numX-1] = edge.number
+		nextVertex[numY][numX] = 0
 	case down:
+		nextVertex[numY+1][numX] = edge.number
+		nextVertex[numY][numX] = 0
 	case up:
+		nextVertex[numY-1][numX] = edge.number
+		nextVertex[numY][numX] = 0
 	case right:
+		nextVertex[numY][numX+1] = edge.number
+		nextVertex[numY][numX] = 0
 	}
-	return make(FifteenVertex, 0)
+	return nextVertex
 }
 
 func (vertex FifteenVertex) GetAllEdges() []FifteenEdge {
@@ -31,13 +42,11 @@ func (vertex FifteenVertex) GetAllEdges() []FifteenEdge {
 		edges = append(edges, edge)
 	}
 
-	// down
 	if zeroY > 0 {
 		edge := FifteenEdge{number: vertex[zeroY-1][zeroX], direction: down}
 		edges = append(edges, edge)
 	}
 
-	// up
 	if zeroY < 3 {
 		edge := FifteenEdge{number: vertex[zeroY+1][zeroX], direction: up}
 		edges = append(edges, edge)
@@ -53,9 +62,9 @@ func (vertex FifteenVertex) GetAllEdges() []FifteenEdge {
 
 // Return x and y coords of the zero
 func (vertex FifteenVertex) getNum(num int) (int, int) {
-    if num > 15 || num < 0 {
-        panic(fmt.Errorf("Num %d is not valid. It must be between 0 and 15", num))
-    }
+	if num > 15 || num < 0 {
+		panic(fmt.Errorf("Num %d is not valid. It must be between 0 and 15", num))
+	}
 	for y := range vertex {
 		for x, number := range vertex[y] {
 			if number == num {
